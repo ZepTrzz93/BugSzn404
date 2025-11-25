@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login By R¡il</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #2e005f 0%, #0a001a 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #fff;
+    }
+
+    .login-container {
+      width: 360px;
+      background: rgba(60, 0, 100, 0.25);
+      backdrop-filter: blur(25px);
+      border: 1px solid rgba(150, 100, 255, 0.3);
+      border-radius: 20px;
+      padding: 40px 30px;
+      text-align: center;
+      box-shadow: 
+        0 10px 30px rgba(90, 0, 180, 0.4),
+        inset 0 1px 4px rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .login-container:hover {
+      transform: translateY(-5px);
+      box-shadow:
+        0 15px 40px rgba(120, 0, 255, 0.6),
+        inset 0 2px 6px rgba(255, 255, 255, 0.15);
+    }
+
+    .login-container img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 3px solid rgba(180, 130, 255, 0.5);
+      box-shadow: 0 0 20px rgba(180, 130, 255, 0.3);
+    }
+
+    .login-container p {
+      color: #cbb8ff;
+      margin-bottom: 25px;
+      font-size: 0.95rem;
+    }
+
+    .input-box {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(180, 130, 255, 0.3);
+      border-radius: 10px;
+      color: #fff;
+      padding: 12px 14px;
+      margin-bottom: 18px;
+      font-size: 0.95rem;
+      transition: 0.3s;
+    }
+
+    .input-box::placeholder {
+      color: #bda6ff;
+    }
+
+    .input-box:focus {
+      border-color: #c3a3ff;
+      outline: none;
+      box-shadow: 0 0 10px rgba(180, 130, 255, 0.5);
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .login-button {
+      width: 100%;
+      background: linear-gradient(135deg, #b68cff, #7c47ff);
+      border: none;
+      border-radius: 12px;
+      color: #fff;
+      font-weight: 600;
+      padding: 12px;
+      cursor: pointer;
+      letter-spacing: 1px;
+      transition: 0.3s;
+      box-shadow: 0 5px 15px rgba(160, 90, 255, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(180, 120, 255, 0.6);
+      background: linear-gradient(135deg, #c6a4ff, #8f5fff);
+    }
+
+    .login-button:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 10px rgba(180, 130, 255, 0.3);
+    }
+
+    /* Bagian footer (nama pembuat & IG) */
+    .footer {
+      margin-top: 25px;
+      text-align: center;
+      color: #bda6ff;
+      font-size: 0.85rem;
+      opacity: 0.8;
+    }
+
+    .footer a {
+      color: #d1b3ff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    .footer a:hover {
+      color: #ffffff;
+      text-shadow: 0 0 5px #bda6ff;
+    }
+    
+    /* Loading animation */
+    .loading {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s ease-in-out infinite;
+      margin: 0 auto;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    /* Error message */
+    .error-message {
+      color: #ff6b6b;
+      font-size: 0.85rem;
+      margin-top: 10px;
+      display: none;
+      animation: shake 0.5s ease-in-out;
+    }
+    
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-5px); }
+      40%, 80% { transform: translateX(5px); }
+    }
+    
+    /* Success message */
+    .success-message {
+      color: #6bff8d;
+      font-size: 0.85rem;
+      margin-top: 10px;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="login-container">
+    <img src="https://files.catbox.moe/8zx20c.jpg" alt="avatar">
+    <p>Please Log-in To Your Account</p>
+    <input type="text" class="input-box" placeholder="Username" id="username">
+    <input type="password" class="input-box" placeholder="Password" id="password">
+    <button class="login-button" id="loginBtn">
+      <span id="btnText">LOGIN</span>
+      <div class="loading" id="loading"></div>
+    </button>
+    <div class="error-message" id="errorMessage">Password salah! Coba lagi.</div>
+    <div class="success-message" id="successMessage">Login berhasil! Mengarahkan ke TikTok...</div>
+  </div>
+
+  <div class="footer">
+    Created by <strong>74R¡iel</strong> | Telegram: <a href="https://t.me/Styleswsp" target="_blank">@Styleswsp</a>
+  </div>
+
+  <script>
+    document.getElementById('loginBtn').addEventListener('click', function() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const btnText = document.getElementById('btnText');
+      const loading = document.getElementById('loading');
+      const errorMessage = document.getElementById('errorMessage');
+      const successMessage = document.getElementById('successMessage');
+      
+      // Sembunyikan pesan error/success sebelumnya
+      errorMessage.style.display = 'none';
+      successMessage.style.display = 'none';
+      
+      // Validasi input
+      if (!username || !password) {
+        errorMessage.textContent = 'Username dan password harus diisi!';
+        errorMessage.style.display = 'block';
+        return;
+      }
+      
+      // Validasi password
+      if (password !== 'Qu27bIskn90287nUwib') {
+        errorMessage.textContent = 'Password salah! Coba lagi.';
+        errorMessage.style.display = 'block';
+        return;
+      }
+      
+      // Tampilkan animasi loading
+      btnText.style.display = 'none';
+      loading.style.display = 'block';
+      
+      // Tampilkan pesan sukses
+      successMessage.style.display = 'block';
+      
+      // Redirect ke akun TikTok setelah jeda singkat
+      setTimeout(function() {
+        // Ganti URL berikut dengan URL TikTok Anda
+        window.location.href = 'https://www.tiktok.com/@qazwsp5';
+      }, 2000);
+    });
+    
+    // Tambahkan event listener untuk tombol Enter
+    document.getElementById('password').addEventListener('keyup', function(event) {
+      if (event.key === 'Enter') {
+        document.getElementById('loginBtn').click();
+      }
+    });
+  </script>
+</body>
+</html>
